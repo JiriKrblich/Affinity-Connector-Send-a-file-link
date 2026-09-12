@@ -1,0 +1,114 @@
+{
+  "id": "filebin",
+  "name": "Send a proof link",
+  "description": "Exports what you choose, uploads it to filebin.net, and hands back one link to send to the client. No account anywhere.",
+  "version": "1.2.5",
+  "testedWith": "Affinity 3.2.3 · Connector for Affinity 1.0.0",
+  "author": "jirikrblich",
+  "bar": { "icon": "share-3" },
+  "image": "docs/header.jpg",
+  "url": "https://jirikrblich.netlify.app",
+  "homepage": "https://filebin.net",
+  "runLabel": "Upload and get a link",
+  "main": "index.js",
+  "timeoutSec": 1200,
+  "fields": [
+    {
+      "key": "note",
+      "type": "note",
+      "label": "Anyone with the link can download it, and it deletes itself after a week. Fine for a proof, not for anything that must stay private."
+    },
+    {
+      "key": "format",
+      "type": "select",
+      "label": "As",
+      "default": "PDF (for print)",
+      "options": [
+        {
+          "value": "PDF (for print)",
+          "label": "PDF, print ready"
+        },
+        {
+          "value": "PDF (digital - high quality)",
+          "label": "PDF, for screen"
+        },
+        {
+          "value": "PNG",
+          "label": "PNG"
+        },
+        {
+          "value": "JPEG (Best quality)",
+          "label": "JPEG"
+        }
+      ]
+    },
+    {
+      "key": "dpi",
+      "type": "select",
+      "label": "Resolution",
+      "default": "0",
+      "options": [
+        {
+          "value": "0",
+          "label": "Full, as the document is set"
+        },
+        {
+          "value": "150",
+          "label": "150 dpi, for review"
+        },
+        {
+          "value": "96",
+          "label": "96 dpi, for screen"
+        },
+        {
+          "value": "72",
+          "label": "72 dpi, small"
+        }
+      ],
+      "help": "Affinity exports at the document's own resolution, so anything lower here is resampled afterwards. It never enlarges.",
+      "showIf": {
+        "key": "format",
+        "in": [
+          "PNG",
+          "JPEG (Best quality)"
+        ]
+      },
+      "advanced": true
+    },
+    {
+      "key": "image",
+      "type": "image",
+      "label": "Send",
+      "source": "spread",
+      "sources": [
+        "spread",
+        "page",
+        "selection",
+        "lasso",
+        "area",
+        "native",
+        "artboard",
+        "layer",
+        "document",
+        "file"
+      ],
+      "presetFrom": "format",
+      "dpiFrom": "dpi"
+    },
+    {
+      "key": "everyArtboard",
+      "type": "checkbox",
+      "label": "Every artboard, as separate files under one link",
+      "default": false,
+      "help": "Ignores the choice above and sends one file per artboard.",
+      "advanced": true
+    },
+    {
+      "key": "name",
+      "type": "text",
+      "label": "Name it",
+      "placeholder": "Leave empty for the document name and today's date",
+      "help": "Becomes the last part of the link, so it is the first thing the client reads."
+    }
+  ]
+}
